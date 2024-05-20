@@ -4,6 +4,7 @@ import axios from 'axios';
 
 function App() {
   const uploadInputRef = useRef(null);
+  const buttonRef = useRef(null);
 
   const [imageURL, setImageURL] = useState('');
   const [loading, setLoading] = useState(false);
@@ -69,9 +70,14 @@ function App() {
 
   return (
     <>
-      {/* <button ref={buttonRef} onClick={() => {
-        uploadInputRef.current.click()
-       }}>이미지 업로드</button> */}
+      <button
+        ref={buttonRef}
+        onClick={() => {
+          uploadInputRef.current.click();
+        }}
+      >
+        이미지 업로드
+      </button>
 
       {loading ? (
         '로딩중...'
@@ -82,6 +88,7 @@ function App() {
             multiple
             ref={uploadInputRef}
             onChange={onChangeFileInput}
+            style={{ width: 0, height: 0 }}
           />
           <div>
             <label>설명</label>
