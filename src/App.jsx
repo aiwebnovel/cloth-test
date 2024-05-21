@@ -50,6 +50,7 @@ function App() {
         human_img: imageTwoRes.data.data, // 원본 사람의 이미지
         garment_des: des, // 프롬프트
       },
+      { timeout: 86400000 },
     );
     setImageURL(creatImageresponse.data.data);
 
