@@ -3,16 +3,23 @@ import './App.css';
 import axios from 'axios';
 
 function App() {
-  const uploadInputRef = useRef(null);
-  const buttonRef = useRef(null);
+  const uploadInputClothRef = useRef(null);
+  const uploadInputHumanRef = useRef(null);
+  const uploadClothImagebuttonRef = useRef(null);
+  const uploadHumanImagebuttonRef = useRef(null);
 
   const [imageURL, setImageURL] = useState('');
   const [loading, setLoading] = useState(false);
-  const [inputFiles, setInputFiles] = useState([]);
+  const [inputClothFiles, setInputClothFiles] = useState('');
+  const [inputHumanFiles, setInputHumanFiles] = useState('');
   const [des, setDes] = useState('black top shirt and white short pants');
 
-  const onChangeFileInput = async (e) => {
-    setInputFiles([e.currentTarget.files[0], e.currentTarget.files[1]]);
+  const onChangeClothFileInput = async (e) => {
+    setInputClothFiles(e.currentTarget.files[0]);
+  };
+
+  const onChangeHumanFileInput = async (e) => {
+    setInputHumanFiles(e.currentTarget.files[0]);
   };
 
   const createMixedImage = async () => {
@@ -20,7 +27,7 @@ function App() {
 
     const formData1 = new FormData();
 
-    formData1.append('file', inputFiles[0]);
+    formData1.append('file', inputClothFiles);
 
     const imageOneRes = await axios.post(
       `https://api.tinytingel.ai/api/v2/user/cloth/upload-image`,
@@ -29,7 +36,7 @@ function App() {
 
     const formData2 = new FormData();
 
-    formData2.append('file', inputFiles[1]);
+    formData2.append('file', inputHumanFiles);
 
     const imageTwoRes = await axios.post(
       `https://api.tinytingel.ai/api/v2/user/cloth/upload-image`,
@@ -56,12 +63,20 @@ function App() {
   return (
     <>
       <button
-        ref={buttonRef}
+        ref={uploadClothImagebuttonRef}
         onClick={() => {
-          uploadInputRef.current.click();
+          uploadInputClothRef.current.click();
         }}
       >
-        이미지 업로드
+        옷 이미지 업로드 하기
+      </button>
+      <button
+        ref={uploadHumanImagebuttonRef}
+        onClick={() => {
+          uploadInputHumanRef.current.click();
+        }}
+      >
+        사람 이미지 업로드 하기
       </button>
 
       {loading ? (
@@ -70,9 +85,14 @@ function App() {
         <>
           <input
             type="file"
-            multiple
-            ref={uploadInputRef}
-            onChange={onChangeFileInput}
+            ref={uploadInputClothRef}
+            onChange={onChangeClothFileInput}
+            style={{ width: 0, height: 0 }}
+          />
+          <input
+            type="file"
+            ref={uploadInputHumanRef}
+            onChange={onChangeHumanFileInput}
             style={{ width: 0, height: 0 }}
           />
           <div>
