@@ -9,7 +9,6 @@ function App() {
   const [imageURL, setImageURL] = useState('');
   const [loading, setLoading] = useState(false);
   const [inputFiles, setInputFiles] = useState([]);
-  const [token, setToken] = useState('');
   const [des, setDes] = useState('black top shirt and white short pants');
 
   const onChangeFileInput = async (e) => {
@@ -24,13 +23,8 @@ function App() {
     formData1.append('file', inputFiles[0]);
 
     const imageOneRes = await axios.post(
-      `https://api.tinytingel.ai/api/v2/user/upload-image`,
+      `https://api.tinytingel.ai/api/v2/user/cloth/upload-image`,
       formData1,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
 
     const formData2 = new FormData();
@@ -38,13 +32,8 @@ function App() {
     formData2.append('file', inputFiles[1]);
 
     const imageTwoRes = await axios.post(
-      `https://api.tinytingel.ai/api/v2/user/upload-image`,
+      `https://api.tinytingel.ai/api/v2/user/cloth/upload-image`,
       formData2,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
 
     const creatImageresponse = await axios.post(
@@ -62,10 +51,6 @@ function App() {
 
   const onChangeDes = (e) => {
     setDes(e.currentTarget.value);
-  };
-
-  const onChangeToken = (e) => {
-    setToken(e.currentTarget.value);
   };
 
   return (
@@ -93,11 +78,6 @@ function App() {
           <div>
             <label>설명</label>
             <input type="text" onChange={onChangeDes} />
-          </div>
-
-          <div>
-            <label>토큰</label>
-            <input type="text" onChange={onChangeToken} />
           </div>
 
           <button onClick={createMixedImage}>생성하기</button>
